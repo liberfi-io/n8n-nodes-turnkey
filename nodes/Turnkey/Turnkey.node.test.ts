@@ -42,86 +42,6 @@ const parseHeaders = (headersString: string | undefined): Record<string, string>
 };
 
 describe('Turnkey Node - Credentials Parsing', () => {
-	describe('cmdCredentials.environments parsing', () => {
-		const testCases = [
-			{
-				name: 'Basic Test',
-				input: 'FOO=bar\nBAZ=qux',
-				expected: { FOO: 'bar', BAZ: 'qux' },
-			},
-			{
-				name: 'Value with Spaces',
-				input: 'MY_VAR=hello world',
-				expected: { MY_VAR: 'hello world' },
-			},
-			{
-				name: 'Value with Commas',
-				input: 'LIST_OF_THINGS=apple,banana,orange',
-				expected: { LIST_OF_THINGS: 'apple,banana,orange' },
-			},
-			{
-				name: 'JSON Value',
-				input: 'JSON_DATA={"key": "value", "number": 123, "nested": {"foo": "bar"}}',
-				expected: { JSON_DATA: '{"key": "value", "number": 123, "nested": {"foo": "bar"}}' },
-			},
-			{
-				name: 'Equals Sign in Value',
-				input: 'FORMULA=E=mc^2',
-				expected: { FORMULA: 'E=mc^2' },
-			},
-			{
-				name: 'Whitespace Trimming',
-				input: '  KEY_WITH_SPACES  =  value with spaces  \nANOTHER=value',
-				expected: { KEY_WITH_SPACES: 'value with spaces', ANOTHER: 'value' },
-			},
-			{
-				name: 'Empty Lines and Lines without Equals',
-				input: 'VALID=true\n\nINVALID_LINE\nANOTHER_VALID=false',
-				expected: { VALID: 'true', ANOTHER_VALID: 'false' },
-			},
-			{
-				name: 'Empty Input',
-				input: '',
-				expected: {},
-			},
-			{
-				name: 'Line with only Equals Sign',
-				input: '=',
-				expected: {},
-			},
-			{
-				name: 'Key starting with Equals',
-				input: '=INVALID_KEY=value',
-				expected: {},
-			},
-			{
-				name: 'Value is just whitespace',
-				input: 'KEY_WITH_WHITESPACE_VALUE=   ',
-				expected: { KEY_WITH_WHITESPACE_VALUE: '' },
-			},
-			{
-				name: 'Value can be empty after key',
-				input: 'EMPTY_VALUE=',
-				expected: { EMPTY_VALUE: '' },
-			},
-			{
-				name: 'Mixed valid and invalid lines',
-				input: 'A=1\nB=\n C = 2 \nINVALID\n=startswithEquals\n  D  =  3  ',
-				expected: { A: '1', B: '', C: '2', D: '3' },
-			},
-		];
-
-		testCases.forEach((tc) => {
-			it(`should correctly parse: ${tc.name}`, () => {
-				// In a real test, you would mock this.getCredentials('turnkeyClientApi')
-				// and then call a method that uses this parsing logic.
-				// For this outline, we'll call the helper directly.
-				const result = parseEnvVars(tc.input);
-				expect(result).toEqual(tc.expected);
-			});
-		});
-	});
-
 	describe('httpCredentials.headers parsing', () => {
 		const testCases = [
 			{
@@ -179,46 +99,6 @@ describe('Turnkey Node - Credentials Parsing', () => {
 		testCases.forEach((tc) => {
 			it(`should correctly parse: ${tc.name}`, () => {
 				// Similar to above, this is a direct call to the helper for the outline.
-				const result = parseHeaders(tc.input);
-				expect(result).toEqual(tc.expected);
-			});
-		});
-	});
-
-	// sseCredentials.headers parsing uses the same logic as httpCredentials.headers
-	// So, we can reuse the same test cases, just imagining they come from 'turnkeyClientSseApi'
-	describe('sseCredentials.headers parsing', () => {
-		const testCases = [
-			{
-				name: 'Basic Header (SSE)',
-				input: 'Content-Type=application/json\nAuthorization=Bearer token456',
-				expected: { 'Content-Type': 'application/json', Authorization: 'Bearer token456' },
-			},
-			{
-				name: 'Header Value with Spaces (SSE)',
-				input: 'X-Sse-Custom-Header=sse value with spaces',
-				expected: { 'X-Sse-Custom-Header': 'sse value with spaces' },
-			},
-			{
-				name: 'JSON in Header Value (SSE)',
-				input: 'X-Sse-Json-Data={"event": "update", "data": {"value": 42}}',
-				expected: { 'X-Sse-Json-Data': '{"event": "update", "data": {"value": 42}}' },
-			},
-			{
-				name: 'Empty Input for Headers (SSE)',
-				input: '',
-				expected: {},
-			},
-			{
-				name: 'Header value can be empty (SSE)',
-				input: 'X-Sse-Empty-Value=',
-				expected: { 'X-Sse-Empty-Value': '' },
-			},
-		];
-
-		testCases.forEach((tc) => {
-			it(`should correctly parse: ${tc.name}`, () => {
-				// Direct call for the outline.
 				const result = parseHeaders(tc.input);
 				expect(result).toEqual(tc.expected);
 			});

@@ -464,6 +464,7 @@ export class Turnkey implements INodeType {
 						| 'TRANSACTION_TYPE_ETHEREUM'
 						| 'TRANSACTION_TYPE_SOLANA'
 						| 'TRANSACTION_TYPE_TRON';
+					const signWith = this.getNodeParameter('signWith', 0) as string;
 					const unsignedTransaction = this.getNodeParameter('unsignedTransaction', 0) as string;
 
 					const resp = await client.signTransaction({
@@ -472,7 +473,7 @@ export class Turnkey implements INodeType {
 						organizationId,
 						parameters: {
 							type, // "TRANSACTION_TYPE_ETHEREUM",
-							signWith: '0x123',
+							signWith,
 							unsignedTransaction,
 						},
 					});
