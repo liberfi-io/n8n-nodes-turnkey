@@ -2,7 +2,7 @@ import { ICredentialType, INodeProperties } from 'n8n-workflow';
 
 export class TurnkeyApi implements ICredentialType {
 	name = 'turnkeyApi';
-	displayName = 'Turnkey Apikey';
+	displayName = 'Turnkey API';
 
 	// Cast the icon to the correct type for n8n
 	icon = 'file:turnkey.svg' as const;
