@@ -13,6 +13,7 @@ export class TurnkeyApi implements ICredentialType {
 			name: 'apiPublicKey',
 			type: 'string',
 			default: '',
+			typeOptions: { password: false },
 			description:
 				'Api Public Key of the Turnkey API',
 		},
