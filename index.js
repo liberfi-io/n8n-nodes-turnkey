@@ -1,11 +1,11 @@
 // This file ensures n8n can find and load your nodes and credentials
-const { TurnkeyClient } = require('./dist/nodes/TurnkeyClient/TurnkeyClient.node.js');
+const { Turnkey } = require('./dist/nodes/Turnkey/Turnkey.node.js');
 
 module.exports = {
 	nodeTypes: {
-		turnkeyClient: TurnkeyClient,
+		turnkey: Turnkey,
 	},
 	credentialTypes: {
-		turnkeyClientApi: require('./dist/credentials/TurnkeyClientApi.credentials.js').TurnkeyClientApi,
+		turnkeyApi: require('./dist/credentials/TurnkeyApi.credentials.js').TurnkeyApi,
 	},
 };
