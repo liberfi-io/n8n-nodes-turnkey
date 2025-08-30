@@ -40,7 +40,7 @@
 			"dist/credentials/TurnkeyApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/TurnkeyClient/Turnkey.node.js"
+			"dist/nodes/Turnkey/Turnkey.node.js"
 		]
 	},
 	"devDependencies": {
