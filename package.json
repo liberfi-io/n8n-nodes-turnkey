@@ -37,7 +37,7 @@
 	"n8n": {
 		"n8nNodesApiVersion": 1,
 		"credentials": [
-			"dist/credentials/TurnkeyApikey.credentials.js"
+			"dist/credentials/TurnkeyApi.credentials.js"
 		],
 		"nodes": [
 			"dist/nodes/TurnkeyClient/Turnkey.node.js"

@@ -30,7 +30,7 @@ export class Turnkey implements INodeType {
 		usableAsTool: true,
 		credentials: [
 			{
-				name: 'turnkeyApikey',
+				name: 'turnkeyApi',
 				required: false,
 				displayOptions: {
 					show: {
@@ -101,7 +101,7 @@ export class Turnkey implements INodeType {
 
 		try {
 			if (authType === 'apikey') {
-				const apiKeyCredentials = await this.getCredentials('turnkeyApikey');
+				const apiKeyCredentials = await this.getCredentials('turnkeyApi');
 
 				const { ApiKeyStamper } = await import("@turnkey/api-key-stamper");
 

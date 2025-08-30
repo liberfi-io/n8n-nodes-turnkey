@@ -1,7 +1,7 @@
 import { ICredentialType, INodeProperties } from 'n8n-workflow';
 
-export class TurnkeyApikey implements ICredentialType {
-	name = 'turnkeyApikey';
+export class TurnkeyApi implements ICredentialType {
+	name = 'turnkeyApi';
 	displayName = 'Turnkey Apikey';
 
 	// Cast the icon to the correct type for n8n
