@@ -95,7 +95,7 @@ export const signFields: INodeProperties[] = [
 			},
 		],
 		default: 'TRANSACTION_TYPE_ETHEREUM',
-		description: '',
+		description: 'Type of transaction to sign',
 		required: true,
 	},
 	{
@@ -109,7 +109,7 @@ export const signFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: '',
+		description: 'Unsigned transaction to sign. For Ethereum transactions, provide hex format (starting with 0x). For Solana transactions, provide base64 format. For Tron transactions, provide hex format.',
 		required: true,
 	}					
 ];
@@ -226,7 +226,7 @@ export class Turnkey implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Turnkey',
 		name: 'turnkey',
-		icon: 'file:turnkey.png',
+		icon: 'file:turnkey.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
