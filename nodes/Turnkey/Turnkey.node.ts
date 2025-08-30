@@ -588,7 +588,7 @@ export class Turnkey implements INodeType {
 					break;
 				}
 
-				case 'getWallets': {
+				case 'listWallets': {
 					const res = await client.getWallets({
 						organizationId,
 					});
