@@ -396,14 +396,6 @@ export class Turnkey implements INodeType {
 				type: 'options',
 				options: [
 					{
-						name: 'Access Token',
-						value: 'accessToken',
-					},
-					{
-						name: 'OAuth2',
-						value: 'oAuth2',
-					},
-					{
 						name: 'API Key',
 						value: 'apiKey',
 					},
