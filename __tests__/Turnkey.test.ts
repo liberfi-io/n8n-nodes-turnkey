@@ -1,4 +1,4 @@
-import { Turnkey } from '../nodes/TurnkeyClient/Turnkey.node';
+import { Turnkey } from '../nodes/Turnkey/Turnkey.node';
 
 describe('Turnkey Node', () => {
 	let turnkey: Turnkey;
@@ -8,7 +8,7 @@ describe('Turnkey Node', () => {
 	});
 
 	it('should have the correct node type', () => {
-		expect(turnkey.description.name).toBe('turnkeyClient');
+		expect(turnkey.description.name).toBe('turnkey');
 	});
 
 	it('should have properties defined', () => {
