@@ -21,11 +21,8 @@ export class TurnkeyApi implements ICredentialType {
 			name: 'apiPrivateKey',
 			type: 'string',
 			default: '',
-			typeOptions: {
-				password: true,
-			},
-			description:
-				'Api Private Key of the Turnkey API',
+			typeOptions: { password: true },
+			description: 'Api Private Key of the Turnkey API',
 		},
 	];
 }
