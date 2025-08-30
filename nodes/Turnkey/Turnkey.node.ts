@@ -381,15 +381,36 @@ export class Turnkey implements INodeType {
 		credentials: [
 			{
 				name: 'turnkeyApi',
-				required: false,
+				required: true,
 				displayOptions: {
 					show: {
-						authType: ['apikey'],
+						authentication: ['apiKey'],
 					},
 				},
 			},
 		],
-		properties: [...commonFields, ...walletFields, ...signFields],
+		properties: [
+			{
+				displayName: 'Authentication',
+				name: 'authentication',
+				type: 'options',
+				options: [
+					{
+						name: 'Access Token',
+						value: 'accessToken',
+					},
+					{
+						name: 'OAuth2',
+						value: 'oAuth2',
+					},
+					{
+						name: 'API Key',
+						value: 'apiKey',
+					},
+				],
+				default: 'apiKey',
+			},
+			...commonFields, ...walletFields, ...signFields],
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -399,15 +420,15 @@ export class Turnkey implements INodeType {
 
 		let stamper: TStamper | undefined;
 
-		let authType = 'apikey';
+		let authentication = 'apiKey';
 		try {
-			authType = this.getNodeParameter('authType', 0) as string;
+			authentication = this.getNodeParameter('authentication', 0) as string;
 		} catch (error) {
-			this.logger.debug('AuthType parameter not found, using default "apikey" transport');
+			this.logger.debug('Authentication parameter not found, using default "apiKey" transport');
 		}
 
 		try {
-			if (authType === 'apikey') {
+			if (authentication === 'apiKey') {
 				const apiKeyCredentials = await this.getCredentials('turnkeyApi');
 
 				const { ApiKeyStamper } = await import('@turnkey/api-key-stamper');
