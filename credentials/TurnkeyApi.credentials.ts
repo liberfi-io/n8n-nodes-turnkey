@@ -5,7 +5,7 @@ export class TurnkeyApi implements ICredentialType {
 	displayName = 'Turnkey API';
 
 	// Cast the icon to the correct type for n8n
-	icon = 'file:turnkey.png' as const;
+	icon = 'file:turnkey.svg' as const;
 
 	properties: INodeProperties[] = [
 		{
