@@ -26,6 +26,12 @@ export const commonFields: INodeProperties[] = [
 		noDataExpression: true,
 		options: [
 			{
+				name: 'Whoami',
+				value: 'whoami',
+				description: 'Get information about the current organization',
+				action: 'Get information about the current organization',
+			},
+			{
 				name: 'Sign Transaction',
 				value: 'signTransaction',
 				description: 'Sign a transaction',
@@ -442,6 +448,17 @@ export class Turnkey implements INodeType {
 			const organizationId = this.getNodeParameter('organizationId', 0) as string;
 
 			switch (operation) {
+				case 'whoami': {
+					const resp = await client.getWhoami({
+						organizationId,
+					});
+
+					returnData.push({
+						json: resp,
+					});
+
+					break;
+				}
 				case 'signTransaction': {
 					const type = this.getNodeParameter('type', 0) as
 						| 'TRANSACTION_TYPE_ETHEREUM'

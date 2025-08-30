@@ -1,7 +1,7 @@
 {
 	"name": "n8n-nodes-turnkey",
-	"version": "0.0.7",
-	"description": "Turnkey nodes for n8n ",
+	"version": "0.0.8",
+	"description": "Turnkey nodes for n8n",
 	"keywords": [
 		"n8n-community-node-package",
 		"turnkey",
