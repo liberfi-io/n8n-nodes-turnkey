@@ -8,7 +8,8 @@ const parseEnvVars = (envString: string | undefined): Record<string, string> => 
 		const envLines = envString.split('\n');
 		for (const line of envLines) {
 			const equalsIndex = line.indexOf('=');
-			if (equalsIndex > 0) { // Ensure '=' is present and not the first character
+			if (equalsIndex > 0) {
+				// Ensure '=' is present and not the first character
 				const name = line.substring(0, equalsIndex).trim();
 				const value = line.substring(equalsIndex + 1).trim();
 				if (name && value !== undefined) {
@@ -27,7 +28,8 @@ const parseHeaders = (headersString: string | undefined): Record<string, string>
 		const headerLines = headersString.split('\n');
 		for (const line of headerLines) {
 			const equalsIndex = line.indexOf('=');
-			if (equalsIndex > 0) { // Ensure '=' is present and not the first character
+			if (equalsIndex > 0) {
+				// Ensure '=' is present and not the first character
 				const name = line.substring(0, equalsIndex).trim();
 				const value = line.substring(equalsIndex + 1).trim();
 				if (name && value !== undefined) {
@@ -109,7 +111,7 @@ describe('Turnkey Node - Credentials Parsing', () => {
 			},
 		];
 
-		testCases.forEach(tc => {
+		testCases.forEach((tc) => {
 			it(`should correctly parse: ${tc.name}`, () => {
 				// In a real test, you would mock this.getCredentials('turnkeyClientApi')
 				// and then call a method that uses this parsing logic.
@@ -165,7 +167,7 @@ describe('Turnkey Node - Credentials Parsing', () => {
 			{
 				name: 'Header value can be empty',
 				input: 'X-Empty-Value=',
-				expected: { 'X-Empty-Value': ''}
+				expected: { 'X-Empty-Value': '' },
 			},
 			{
 				name: 'Mixed valid and invalid header lines',
@@ -174,7 +176,7 @@ describe('Turnkey Node - Credentials Parsing', () => {
 			},
 		];
 
-		testCases.forEach(tc => {
+		testCases.forEach((tc) => {
 			it(`should correctly parse: ${tc.name}`, () => {
 				// Similar to above, this is a direct call to the helper for the outline.
 				const result = parseHeaders(tc.input);
@@ -210,11 +212,11 @@ describe('Turnkey Node - Credentials Parsing', () => {
 			{
 				name: 'Header value can be empty (SSE)',
 				input: 'X-Sse-Empty-Value=',
-				expected: { 'X-Sse-Empty-Value': ''}
+				expected: { 'X-Sse-Empty-Value': '' },
 			},
 		];
 
-		testCases.forEach(tc => {
+		testCases.forEach((tc) => {
 			it(`should correctly parse: ${tc.name}`, () => {
 				// Direct call for the outline.
 				const result = parseHeaders(tc.input);
