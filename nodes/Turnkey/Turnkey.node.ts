@@ -26,18 +26,6 @@ export const commonFields: INodeProperties[] = [
 		noDataExpression: true,
 		options: [
 			{
-				name: 'Whoami',
-				value: 'whoami',
-				description: 'Get information about the current organization',
-				action: 'Get information about the current organization',
-			},
-			{
-				name: 'Sign Transaction',
-				value: 'signTransaction',
-				description: 'Sign a transaction',
-				action: 'Sign a transaction',
-			},
-			{
 				name: 'Create Wallet',
 				value: 'createWallet',
 				description: 'Create a wallet',
@@ -54,6 +42,18 @@ export const commonFields: INodeProperties[] = [
 				value: 'listWallets',
 				description: 'Get a list of available wallets',
 				action: 'List available wallets',
+			},
+			{
+				name: 'Sign Transaction',
+				value: 'signTransaction',
+				description: 'Sign a transaction',
+				action: 'Sign a transaction',
+			},
+			{
+				name: 'Whoami',
+				value: 'whoami',
+				description: 'Get information about the current organization',
+				action: 'Get information about the current organization',
 			},
 		],
 		default: 'signTransaction',
