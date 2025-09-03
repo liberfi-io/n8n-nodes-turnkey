@@ -106,6 +106,24 @@ export const signFields: INodeProperties[] = [
 		required: true,
 	},
 	{
+		displayName: 'Encoding',
+		name: 'encoding',
+		type: 'options',
+		options: [
+			{ name: 'Base64', value: 'ENCODING_BASE64' },
+			{ name: 'Base58', value: 'ENCODING_BASE58' },
+			{ name: 'Hex', value: 'ENCODING_HEX' },
+		],
+		default: 'ENCODING_HEX',
+		description: 'Encoding of the unsigned transaction',
+		required: true,
+		displayOptions: {
+			show: {
+				operation: ['signTransaction'],
+			},
+		},
+	},
+	{
 		displayName: 'Sign With',
 		name: 'signWith',
 		type: 'string',
@@ -480,8 +498,25 @@ export class Turnkey implements INodeType {
 						| 'TRANSACTION_TYPE_ETHEREUM'
 						| 'TRANSACTION_TYPE_SOLANA'
 						| 'TRANSACTION_TYPE_TRON';
+					const encoding = this.getNodeParameter('encoding', 0) as
+						| 'ENCODING_BASE64'
+						| 'ENCODING_HEX'
+						| 'ENCODING_BASE58';
 					const signWith = this.getNodeParameter('signWith', 0) as string;
 					const unsignedTransaction = this.getNodeParameter('unsignedTransaction', 0) as string;
+
+					let processedTransaction = unsignedTransaction;
+					if (encoding === 'ENCODING_BASE64') {
+						const buffer = Buffer.from(unsignedTransaction, 'base64');
+						processedTransaction = buffer.toString('hex');
+					} else if (encoding === 'ENCODING_BASE58') {
+						const { default: bs58 } = await import('bs58');
+						const buffer = bs58.decode(unsignedTransaction);
+						processedTransaction = Buffer.from(buffer).toString('hex');
+					} else if (encoding === 'ENCODING_HEX') {
+						processedTransaction = unsignedTransaction;
+					}
+
 
 					const resp = await client.signTransaction({
 						type: 'ACTIVITY_TYPE_SIGN_TRANSACTION_V2',
@@ -490,10 +525,21 @@ export class Turnkey implements INodeType {
 						parameters: {
 							type, // "TRANSACTION_TYPE_ETHEREUM",
 							signWith,
-							unsignedTransaction,
+							unsignedTransaction: processedTransaction,
 						},
 					});
 
+					if (resp.activity.intent.signTransactionIntentV2) {
+						const buffer = Buffer.from(resp.activity.intent.signTransactionIntentV2.unsignedTransaction, 'hex');
+						if (encoding === 'ENCODING_BASE64') {
+							resp.activity.intent.signTransactionIntentV2.unsignedTransaction = buffer.toString('base64');
+						} else if (encoding === 'ENCODING_BASE58') {
+							const { default: bs58 } = await import('bs58');
+							resp.activity.intent.signTransactionIntentV2.unsignedTransaction = bs58.encode(buffer);
+						} else if (encoding === 'ENCODING_HEX') {
+						}
+					}
+					
 					returnData.push({
 						json: resp,
 					});

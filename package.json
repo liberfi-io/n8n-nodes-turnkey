@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-turnkey",
-	"version": "0.0.18",
+	"version": "0.0.21",
 	"description": "Turnkey nodes for n8n",
 	"keywords": [
 		"n8n-community-node-package",
@@ -59,6 +59,7 @@
 	"dependencies": {
 		"@turnkey/api-key-stamper": "^0.4.7",
 		"@turnkey/http": "^3.11.0",
+		"bs58": "^6.0.0",
 		"zod": "3.24.0",
 		"zod-to-json-schema": "^3.24.6"
 	},
