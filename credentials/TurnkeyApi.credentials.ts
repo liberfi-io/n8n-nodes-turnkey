@@ -9,6 +9,14 @@ export class TurnkeyApi implements ICredentialType {
 
 	properties: INodeProperties[] = [
 		{
+			displayName: 'Base URL',
+			name: 'baseUrl',
+			type: 'string',
+			default: 'https://api.turnkey.com',
+			required: true,
+			description: 'Base URL of the Turnkey API',
+		},	
+		{
 			displayName: 'Api Public Key',
 			name: 'apiPublicKey',
 			type: 'string',

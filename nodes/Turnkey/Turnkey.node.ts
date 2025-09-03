@@ -1,4 +1,5 @@
 import {
+	IDataObject,
 	IExecuteFunctions,
 	INodeExecutionData,
 	INodeProperties,
@@ -8,17 +9,8 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 import { TurnkeyClient } from '@turnkey/http';
-import { TStamper } from '@turnkey/http/dist/base';
 
 export const commonFields: INodeProperties[] = [
-	{
-		displayName: 'Base URL',
-		name: 'baseUrl',
-		type: 'string',
-		default: 'https://api.turnkey.com',
-		required: true,
-		description: 'Base URL of the Turnkey API',
-	},
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -36,6 +28,18 @@ export const commonFields: INodeProperties[] = [
 				value: 'createWalletAccounts',
 				description: 'Create a wallet account',
 				action: 'Create a wallet account',
+			},
+			{
+				name: 'Get Wallet',
+				value: 'getWallet',
+				description: 'Get a wallet',
+				action: 'Get a wallet',
+			},
+			{
+				name: 'Get Wallet Accounts',
+				value: 'getWalletAccounts',
+				description: 'Get a wallet account',
+				action: 'Get a wallet account',
 			},
 			{
 				name: 'List Wallets',
@@ -141,7 +145,7 @@ export const walletFields: INodeProperties[] = [
 		description: 'ID of the wallet to create accounts for',
 		displayOptions: {
 			show: {
-				operation: ['createWalletAccounts'],
+				operation: ['getWallet', 'getWalletAccounts', 'createWalletAccounts'],
 			},
 		},
 	},
@@ -414,9 +418,7 @@ export class Turnkey implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const returnData: INodeExecutionData[] = [];
 		const operation = this.getNodeParameter('operation', 0) as string;
-		const baseUrl = this.getNodeParameter('baseUrl', 0) as string;
-
-		let stamper: TStamper | undefined;
+		let client: TurnkeyClient | undefined;
 
 		let authentication = 'apiKey';
 		try {
@@ -428,22 +430,23 @@ export class Turnkey implements INodeType {
 		try {
 			if (authentication === 'apiKey') {
 				const apiKeyCredentials = await this.getCredentials('turnkeyApi');
-
+				
 				const { ApiKeyStamper } = await import('@turnkey/api-key-stamper');
-
-				stamper = new ApiKeyStamper({
+				
+				const stamper = new ApiKeyStamper({
 					apiPublicKey: apiKeyCredentials.apiPublicKey as string,
 					apiPrivateKey: apiKeyCredentials.apiPrivateKey as string,
 				});
+				const baseUrl = apiKeyCredentials.baseUrl as string;
+
+				client = new TurnkeyClient({ baseUrl }, stamper);
 			} else {
 			}
 
 			// Add error handling to transport
-			if (!stamper) {
-				throw new NodeOperationError(this.getNode(), 'No stamper available');
+			if (!client) {
+				throw new NodeOperationError(this.getNode(), 'No client available');
 			}
-
-			const client = new TurnkeyClient({ baseUrl }, stamper);
 
 			const organizationId = this.getNodeParameter('organizationId', 0) as string;
 
@@ -486,7 +489,7 @@ export class Turnkey implements INodeType {
 				case 'createWallet': {
 					const walletName = this.getNodeParameter('walletName', 0) as string;
 
-					const accounts = this.getNodeParameter('accounts', 0) as {
+					const accounts = ((this.getNodeParameter('accounts', 0) as IDataObject).values ?? []) as {
 						curve: 'CURVE_SECP256K1' | 'CURVE_ED25519';
 						pathFormat: 'PATH_FORMAT_BIP32';
 						path: string;
@@ -528,7 +531,7 @@ export class Turnkey implements INodeType {
 							| 'ADDRESS_FORMAT_TON_V5R1'
 							| 'ADDRESS_FORMAT_XRP';
 					}[];
-
+		
 					const res = await client.createWallet({
 						type: 'ACTIVITY_TYPE_CREATE_WALLET',
 						timestampMs: Date.now().toString(),
@@ -546,7 +549,7 @@ export class Turnkey implements INodeType {
 				}
 				case 'createWalletAccounts': {
 					const walletId = this.getNodeParameter('walletId', 0) as string;
-					const accounts = this.getNodeParameter('accounts', 0) as {
+					const accounts = ((this.getNodeParameter('accounts', 0) as IDataObject).values ?? []) as {
 						curve: 'CURVE_SECP256K1' | 'CURVE_ED25519';
 						pathFormat: 'PATH_FORMAT_BIP32';
 						path: string;
@@ -605,7 +608,34 @@ export class Turnkey implements INodeType {
 
 					break;
 				}
+				case 'getWallet': {
+					const walletId = this.getNodeParameter('walletId', 0) as string;
+					
+					const res = await client.getWallet({
+						organizationId,
+						walletId,
+					})
 
+					returnData.push({
+						json: res,
+					});
+
+					break;
+				}
+				case 'getWalletAccounts': {
+					const walletId = this.getNodeParameter('walletId', 0) as string;
+
+					const res = await client.getWalletAccounts({
+						organizationId,
+						walletId,
+					});
+					
+					returnData.push({
+						json: res,
+					});
+
+					break;
+				}
 				case 'listWallets': {
 					const res = await client.getWallets({
 						organizationId,
