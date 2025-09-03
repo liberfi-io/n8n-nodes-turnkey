@@ -106,6 +106,19 @@ export const signFields: INodeProperties[] = [
 		required: true,
 	},
 	{
+		displayName: 'Sign With',
+		name: 'signWith',
+		type: 'string',
+		default: '',
+		required: true,
+		description: 'A Wallet account address, Private Key address, or Private Key identifier',
+		displayOptions: {
+			show: {
+				operation: ['signTransaction'],
+			},
+		},
+	},
+	{
 		displayName: 'Unsigned Transaction',
 		name: 'unsignedTransaction',
 		type: 'string',
