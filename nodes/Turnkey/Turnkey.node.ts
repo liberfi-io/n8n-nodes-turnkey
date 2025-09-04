@@ -529,13 +529,13 @@ export class Turnkey implements INodeType {
 						},
 					});
 
-					if (resp.activity.intent.signTransactionIntentV2) {
-						const buffer = Buffer.from(resp.activity.intent.signTransactionIntentV2.unsignedTransaction, 'hex');
+					if (resp.activity.result.signTransactionResult?.signedTransaction) {
+						const buffer = Buffer.from(resp.activity.result.signTransactionResult.signedTransaction, 'hex');
 						if (encoding === 'ENCODING_BASE64') {
-							resp.activity.intent.signTransactionIntentV2.unsignedTransaction = buffer.toString('base64');
+							resp.activity.result.signTransactionResult.signedTransaction = buffer.toString('base64');
 						} else if (encoding === 'ENCODING_BASE58') {
 							const { default: bs58 } = await import('bs58');
-							resp.activity.intent.signTransactionIntentV2.unsignedTransaction = bs58.encode(buffer);
+							resp.activity.result.signTransactionResult.signedTransaction = bs58.encode(buffer);
 						} else if (encoding === 'ENCODING_HEX') {
 						}
 					}
