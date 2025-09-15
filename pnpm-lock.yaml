@@ -18,11 +18,11 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       zod:
-        specifier: 3.24.0
-        version: 3.24.0
+        specifier: 4.1.8
+        version: 4.1.8
       zod-to-json-schema:
         specifier: ^3.24.6
-        version: 3.24.6(zod@3.24.0)
+        version: 3.24.6(zod@4.1.8)
     devDependencies:
       '@types/jest':
         specifier: ^29.5.14
@@ -2406,11 +2406,11 @@ packages:
     peerDependencies:
       zod: ^3.24.1
 
-  zod@3.24.0:
-    resolution: {integrity: sha512-Hz+wiY8yD0VLA2k/+nsg2Abez674dDGTai33SwNvMPuf9uIrBC9eFgIMQxBBbHFxVXi8W+5nX9DcAh9YNSQm/w==}
-
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
+
+  zod@4.1.8:
+    resolution: {integrity: sha512-5R1P+WwQqmmMIEACyzSvo4JXHY5WiAFHRMg+zBZKgKS+Q1viRa0C1hmUKtHltoIFKtIdki3pRxkmpP74jnNYHQ==}
 
 snapshots:
 
@@ -5223,10 +5223,10 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-to-json-schema@3.24.6(zod@3.24.0):
+  zod-to-json-schema@3.24.6(zod@4.1.8):
     dependencies:
-      zod: 3.24.0
-
-  zod@3.24.0: {}
+      zod: 4.1.8
 
   zod@3.24.1: {}
+
+  zod@4.1.8: {}
