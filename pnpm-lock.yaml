@@ -12,8 +12,8 @@ importers:
         specifier: ^0.4.7
         version: 0.4.7
       '@turnkey/http':
-        specifier: ^3.11.0
-        version: 3.11.0
+        specifier: ^3.12.0
+        version: 3.12.0
       bs58:
         specifier: ^6.0.0
         version: 6.0.0
@@ -398,16 +398,24 @@ packages:
     resolution: {integrity: sha512-/0/kW7v+uCnmHnGMoHSXn4Vb/MxLAIivGxX/T0L4vVoIiJalQmqcCtgiWnPWZDiJNGjMKp+jd/8j6VXgbVVozg==}
     engines: {node: '>=18.0.0'}
 
+  '@turnkey/api-key-stamper@0.5.0':
+    resolution: {integrity: sha512-DcxavFpNO93mJnCSef+g97uuQANYHjxxqK8z+cX7GztSBN+Skfja5656VDZCUITql4gNhhiNyjMiWLutS2DDJg==}
+    engines: {node: '>=18.0.0'}
+
   '@turnkey/encoding@0.5.0':
     resolution: {integrity: sha512-nRlKRQa6B5/xltGUKN1iKo4h4YC/0iFz0fAuFFZevc+YGDj7ddAP/3HkWmVvLmdoicUgs9rxvWbLRlgqPkbwzQ==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/http@3.11.0':
-    resolution: {integrity: sha512-9HetrzUbXoo/CaXzeIlu+wg0lKUYTXPckrwT+95xb0VVLo2vS9WMWvc8Qhi138HnZxFzeqaeJ7/r8gFBV04HrQ==}
+  '@turnkey/encoding@0.6.0':
+    resolution: {integrity: sha512-IC8qXvy36+iGAeiaVIuJvB35uU2Ld/RAWI/DRTKS+ttBej0GXhOn48Ouu5mlca4jt8ZEuwXmDVv74A8uBQclsA==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/webauthn-stamper@0.5.1':
-    resolution: {integrity: sha512-eBwceTStSSettBQsLo3X5eJEarcK9f20cGUdi6jOesXOP86iYEIgR4+aH2qyCQ3eaovj+Hl44UGngXueIm/tKg==}
+  '@turnkey/http@3.12.0':
+    resolution: {integrity: sha512-4Y1U/6p/JCGwpQv+DMIBoCKdfTTIbKpy88nWPl66wNRUEuuWgZCREkPqHQ669x0tVWndaRmngY/kfelJdcDOIg==}
+    engines: {node: '>=18.0.0'}
+
+  '@turnkey/webauthn-stamper@0.6.0':
+    resolution: {integrity: sha512-jdN17QEnn7RBykEOhtKIialWmDjnDAH8DzbyITwn8jsKcwT1TBNYge89hTUTjbdsDLBAqQw8cHujPdy0RaAqvw==}
     engines: {node: '>=18.0.0'}
 
   '@types/babel__core@7.20.5':
@@ -674,6 +682,9 @@ packages:
 
   bs58@6.0.0:
     resolution: {integrity: sha512-PD0wEnEYg6ijszw/u8s+iI3H17cTymlrwkKhDhPZq+Sokl3AU4htyBFTjAeNAlCCmg0f53g6ih3jATyCKftTfw==}
+
+  bs58check@4.0.0:
+    resolution: {integrity: sha512-FsGDOnFg9aVI9erdriULkd/JjEWONV/lQE5aYziB5PoBsXRind56lh8doIZIc9X4HoxT5x4bLjMWN1/NB8Zp5g==}
 
   bser@2.1.1:
     resolution: {integrity: sha512-gQxTNE/GAfIIrmHLUE3oJyp5FO6HRBfhjnw4/wMmA63ZGDJnWBmgY/lyQBpnDUkGmAhbSe39tx2d/iTOAfglwQ==}
@@ -2884,18 +2895,29 @@ snapshots:
       '@turnkey/encoding': 0.5.0
       sha256-uint8array: 0.10.7
 
+  '@turnkey/api-key-stamper@0.5.0':
+    dependencies:
+      '@noble/curves': 1.9.7
+      '@turnkey/encoding': 0.6.0
+      sha256-uint8array: 0.10.7
+
   '@turnkey/encoding@0.5.0': {}
 
-  '@turnkey/http@3.11.0':
+  '@turnkey/encoding@0.6.0':
     dependencies:
-      '@turnkey/api-key-stamper': 0.4.7
-      '@turnkey/encoding': 0.5.0
-      '@turnkey/webauthn-stamper': 0.5.1
+      bs58: 6.0.0
+      bs58check: 4.0.0
+
+  '@turnkey/http@3.12.0':
+    dependencies:
+      '@turnkey/api-key-stamper': 0.5.0
+      '@turnkey/encoding': 0.6.0
+      '@turnkey/webauthn-stamper': 0.6.0
       cross-fetch: 3.2.0
     transitivePeerDependencies:
       - encoding
 
-  '@turnkey/webauthn-stamper@0.5.1':
+  '@turnkey/webauthn-stamper@0.6.0':
     dependencies:
       sha256-uint8array: 0.10.7
 
@@ -3240,6 +3262,11 @@ snapshots:
   bs58@6.0.0:
     dependencies:
       base-x: 5.0.1
+
+  bs58check@4.0.0:
+    dependencies:
+      '@noble/hashes': 1.8.0
+      bs58: 6.0.0
 
   bser@2.1.1:
     dependencies:
